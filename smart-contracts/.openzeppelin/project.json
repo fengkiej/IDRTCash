@@ -1,0 +1,13 @@
+{
+  "manifestVersion": "2.2",
+  "contracts": {
+    "IDRTCash": "IDRTCashV1"
+  },
+  "dependencies": {},
+  "name": "IDRTCash",
+  "version": "1.0.0",
+  "compiler": {
+    "manager": "truffle"
+  },
+  "telemetryOptIn": false
+}

@@ -1,0 +1,31 @@
+{
+  "name": "idrtcash-smart-contracts",
+  "version": "1.0.0",
+  "description": "Smart contract repository of IDRTCash written in Solidity on Truffle Framework",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@openzeppelin/cli": "^2.6.0",
+    "@openzeppelin/contracts": "^2.4.0",
+    "@openzeppelin/test-helpers": "^0.5.4",
+    "@openzeppelin/upgrades": "^2.6.0",
+    "dotenv": "^8.2.0",
+    "truffle": "^5.1.9"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "smart contract",
+    "erc721",
+    "solidity",
+    "ethereum",
+    "idrt",
+    "rupiah token"
+  ],
+  "author": "FengkieJ",
+  "license": "MIT"
+}
