@@ -1,5 +1,6 @@
-pragma solidity ^0.5.0;
 /* For development/local testing only */
+
+pragma solidity ^0.5.0;
 
 // Searcher is an interface for contracts that want to be notified of incoming data
 contract Searcher {

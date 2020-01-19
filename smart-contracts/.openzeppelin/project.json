@@ -4,10 +4,6 @@
     "IDRTCash": "IDRTCashV1"
   },
   "dependencies": {},
-  "name": "IDRTCash",
-  "version": "1.0.0",
-  "compiler": {
-    "manager": "truffle"
-  },
-  "telemetryOptIn": false
+  "name": "idrtcash-smart-contracts",
+  "version": "1.0.0"
 }

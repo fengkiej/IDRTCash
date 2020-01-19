@@ -21,13 +21,13 @@ contract('IDRTCashV1', ([admin, user, other]) => {
         this.IDRTCashV1Proxy = await this.project.createProxy(OZIDRTCashV1);
         
         this.denominations = [1000, 2000, 5000, 10000, 20000, 50000, 100000];
-        this.erc20 = await ERC20IDRT.new({ from: admin });
+        this.erc20 = await ERC20IDRT.new("Rupiah Token Sample", "IDRTS", 2, { from: admin });
         this.lighthouse = await Lighthouse.new({ from: admin });
 
         this.erc20Decimals = await this.erc20.decimals();
         this.contract = await IDRTCashV1.at(this.IDRTCashV1Proxy.address);
 
-        await this.erc20.transfer(user, 100000000, { from: admin });
+        await this.erc20.mint(user, 100000000, { from: user });
         await this.lighthouse.write(0, 0);
         await this.contract.initialize(this.denominations, this.erc20.address, this.lighthouse.address);
     });
