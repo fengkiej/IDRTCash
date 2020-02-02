@@ -29,7 +29,7 @@ contract('IDRTCashV1', ([admin, user, other]) => {
 
         await this.erc20.mint(user, 100000000, { from: user });
         await this.lighthouse.write(0, 0);
-        await this.contract.initialize(this.denominations, this.erc20.address, this.lighthouse.address);
+        await this.contract.initialize(this.denominations, this.erc20.address, this.lighthouse.address, '');
     });
 
     describe('V1', function() {

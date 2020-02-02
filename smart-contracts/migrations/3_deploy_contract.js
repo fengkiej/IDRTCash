@@ -13,7 +13,12 @@ let LighthouseAddress;
 async function deploy(options) {
   add({ contractsData: [{ name: 'IDRTCashV1', alias: 'IDRTCash' }] });
   await push(options);
-  await create(Object.assign({ contractAlias: 'IDRTCash', methodName: 'initialize', methodArgs: [denoms, ERC20IDRTAddress, LighthouseAddress] }, options));
+  await create(Object.assign({ contractAlias: 'IDRTCash', methodName: 'initialize', methodArgs: [denoms, ERC20IDRTAddress, LighthouseAddress, process.env.BASE_URI] }, options));
+
+  if(options.network == 'development') {
+    const lighthouse = await Lighthouse.deployed()
+    await lighthouse.write(0,0);
+  }
 }
 
 module.exports = async function(deployer, networkName, accounts) {

@@ -21,12 +21,12 @@ contract IDRTCashV1 is Initializable, ERC721Enumerable, ERC721Metadata, ERC721Pa
     // Base URI
     string internal _baseURI;
 
-    // Mapping from token ID to token denominations
+    // Mapping from token ID to token _denominations
     mapping (uint256 => uint) public tokenDenom;
 
-    // The IDRTCash denominations is indexed by `denominations` array
-    uint[] public denominations;
-    uint internal denominations_length;
+    // The IDRTCash _denominations is indexed by `_denominations` array
+    uint[] internal _denominations;
+    uint internal _denominations_length;
     
     modifier onlyOwnerOf(uint tokenId) {
         require(_msgSender() == ownerOf(tokenId), "IDRTCash: msg.sender is not the owner of the token");
@@ -38,7 +38,10 @@ contract IDRTCashV1 is Initializable, ERC721Enumerable, ERC721Metadata, ERC721Pa
         _;
     }
 
-    function initialize(uint[] calldata denoms, address erc20Address, address lighthouseAddress) initializer external {
+    /**
+    * @dev Initialize contract, required by OpenZeppelin SDK Upgradable pattern
+    */
+    function initialize(uint[] calldata denoms, address erc20Address, address lighthouseAddress, string calldata baseURI) initializer external {
         ERC721.initialize();
         ERC721Enumerable.initialize();
         ERC721Metadata.initialize("IDRTCash", "IDRTC");
@@ -47,11 +50,22 @@ contract IDRTCashV1 is Initializable, ERC721Enumerable, ERC721Metadata, ERC721Pa
         erc20 = ERC20Detailed(erc20Address);
         erc20Decimals = erc20.decimals();
 
-        denominations = denoms;
-        denominations_length = denoms.length;
+        _denominations = denoms;
+        _denominations_length = denoms.length;
 
         lighthouse = ILighthouse(lighthouseAddress);
+        _baseURI = baseURI;
     }
+
+    /**
+    * @dev Returns IDRTCash _denominations
+    */
+    function denominations(uint index) external view returns (uint) {
+        require(index >= 0 && index < _denominations_length);
+
+        return _denominations[index];
+    }
+
 
     /**
     * @dev Returns the base URI set via {_setBaseURI}. This will be
@@ -77,19 +91,31 @@ contract IDRTCashV1 is Initializable, ERC721Enumerable, ERC721Metadata, ERC721Pa
         return string(abi.encodePacked(_baseURI, Strings.fromUint256(tokenId), ".json"));
     }
 
-    function makingChange(uint remainder) internal returns (uint[] memory, uint) {
-        uint[] memory result = new uint[](denominations_length);
-        
-        for (uint i = denominations_length; i > 0; i--) {
-            while (remainder >= denominations[i - 1]) {
+    /**
+     * @dev Caculate how many ERC721 can be made from the input amount 
+     * uses Greedy algorithm.
+     * @param amount , amount to be calculated
+     */
+    function makingChange(uint amount) internal returns (uint[] memory, uint) {
+        uint[] memory result = new uint[](_denominations_length);
+        uint remainder = amount;
+
+        for (uint i = _denominations_length; i > 0; i--) {
+            while (remainder >= _denominations[i - 1]) {
                 result[i - 1]++;
-                remainder -= denominations[i - 1];
+                remainder -= _denominations[i - 1];
             }
         }
 
         return (result, remainder);
     }
 
+    /**
+     * @dev Mint ERC721 tokens for a given input amount, 
+     * randomize tokenId based on several parameters including Rhombus's Oracle
+     * transfer ERC20 token to the contract by total minted amount.
+     * @param amount , amount to be minted
+     */
     function mint(uint amount) hasEnoughAllowance(amount) whenNotPaused public {
         (uint randomNumber, bool ok) = lighthouse.peekData();
         require(ok, "IDRTCashV1: Rhombus oracle contract does not return `ok`");
@@ -113,18 +139,34 @@ contract IDRTCashV1 is Initializable, ERC721Enumerable, ERC721Metadata, ERC721Pa
         require(erc20.transferFrom(_msgSender(), address(this), mintAmount.sub(remainder).mul(10 ** erc20Decimals)));
     }
 
+    /**
+     * @dev Burn ERC721 token, and transfer the locked ERC20 to the token owner.
+     * @param tokenId , tokenId to be burn
+     */
     function burn(uint tokenId) onlyOwnerOf(tokenId) whenNotPaused public {
         _burn(_msgSender(), tokenId);
         
-        uint transferAmount = denominations[tokenDenom[tokenId]].mul(10 ** erc20Decimals);
+        uint transferAmount = _denominations[tokenDenom[tokenId]].mul(10 ** erc20Decimals);
         delete tokenDenom[tokenId];
 
         require(erc20.transfer(_msgSender(), transferAmount), "IDRTCash: ERC20 token transfer failed");
     }
 
+    /**
+    * @dev Burn multiple ERC721 tokens.
+    * @param tokenIds , array of tokenId to be burn.
+    */
     function burnBatch(uint[] memory tokenIds) whenNotPaused public {
         for (uint i; i < tokenIds.length; i++) {
             burn(tokenIds[i]);
         }
+    }
+
+    /**
+    * @dev return ERC721 token owned by an address.
+    * @param owner , address of token owner
+    */
+    function getOwnedTokens(address owner) public view returns (uint[] memory) {
+        return super._tokensOfOwner(owner);
     }
 }

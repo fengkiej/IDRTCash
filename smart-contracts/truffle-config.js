@@ -88,8 +88,8 @@ module.exports = {
       version: "0.5.8",    // Fetch exact version from solc-bin (default: truffle's version)
       settings: {          // See the solidity docs for advice about optimization and evmVersion
        optimizer: {
-         enabled: true,
-         runs: 500
+         enabled: false,
+         runs: 200
        },
        evmVersion: "constantinople"
       }
