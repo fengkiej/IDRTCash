@@ -17,7 +17,7 @@ IDRTCash is intended to mimic the rupiah denominations as ERC721 cryptocollectib
 ## Running on Local ##
 1. Clone the repository
 ```
-git clone https://github.com/fengkiej/<project_name>
+git clone https://github.com/fengkiej/IDRTCash.git
 cd IDRTCash
 ```
 
