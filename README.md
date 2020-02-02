@@ -59,6 +59,10 @@ First account private key: 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d
 
 8. Go to `localhost:8000` to start interacting with IDRTCash.
 
+## Possible Improvements ##
+- Host the metadata and image at IPFS.
+- Frontend revamping.
+- Develop for possible use with Plasma Cash.
 
 ## References ##
 1. https://rupiahtoken.com/whitepaper.pdf
