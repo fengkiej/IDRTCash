@@ -8,7 +8,7 @@ module.exports = function(deployer, networkName) {
       deployer.deploy(ERC20IDRTSample, "Rupiah Token Sample", "IDRTS", 2);
       deployer.deploy(Lighthouse);
       break;
-    case 'testnet':
+    case 'rinkeby' || 'testnet':
       deployer.deploy(ERC20IDRTSample, "Rupiah Token Sample", "IDRTS", 2);
       break;
   }

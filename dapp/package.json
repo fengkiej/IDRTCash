@@ -12,7 +12,7 @@
     "start": "run-p start:**",
     "start:app": "npm run develop",
     "start:lambda": "netlify-lambda serve src/lambda",
-    "build": "gatsby build && netlify-lambda build src/lambda",
+    "build": "run-p build:**",
     "build:app": "gatsby build",
     "build:lambda": "netlify-lambda build src/lambda"
   },

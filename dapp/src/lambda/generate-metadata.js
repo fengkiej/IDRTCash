@@ -52,8 +52,8 @@ function generateJSON(tokenId) {
   const metadata = {
     "name": `IDRTCash #${ sn }`,
     "description": `IDRTCash #${ sn }`,
-    "image": `/static/images/${ tokenId }.svg`,
-    "image_data": `/static/images/${ tokenId }.svg`,
+    "image": `${process.env.BASE_URI}/static/images/${ tokenId }.svg`,
+    "image_data": `${process.env.BASE_URI}/static/images/${ tokenId }.svg`,
     "attributes": [
       {
         "display_type": "serial number", 

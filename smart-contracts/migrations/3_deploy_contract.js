@@ -27,7 +27,7 @@ module.exports = async function(deployer, networkName, accounts) {
       ERC20IDRTAddress = ERC20IDRTSample.address;
       LighthouseAddress = Lighthouse.address;
       break;
-    case 'testnet':
+    case 'rinkeby' || 'testnet':
       ERC20IDRTAddress = ERC20IDRTSample.address;
       LighthouseAddress = process.env.LIGHTHOUSE_ADDRESS;
       break;
@@ -38,7 +38,7 @@ module.exports = async function(deployer, networkName, accounts) {
   }
 
   await deployer.then(async () => {
-    const { network, txParams } = await ConfigManager.initNetworkConfiguration({ network: networkName, from: accounts[0]});
+    const { network, txParams } = await ConfigManager.initNetworkConfiguration({ network: networkName, gas: 8000000 });
 
     await deploy({ network, txParams })
   });
