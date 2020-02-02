@@ -11,6 +11,9 @@ IDRTCash is intended to mimic the rupiah denominations as ERC721 cryptocollectib
 * Upgradable contract pattern using OpenZeppelin's SDK
 * Collect IDRTCash with unique serial number/token ID
 
+## Preview ##
+![IDRTCash](https://user-images.githubusercontent.com/14020439/73609794-b85a6700-4603-11ea-9509-1371a8e86500.gif)
+
 ## Running on Local ##
 1. Clone the repository
 ```
