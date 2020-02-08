@@ -26,7 +26,7 @@ cd IDRTCash
 cd smart-contracts
 npm install
 ```
-.env:
+`.env:`
 ```
 BASE_URI=localhost:8000/static/metadata
 DENOMS=[1000,2000,5000,10000,20000,50000,100000]
