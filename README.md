@@ -21,15 +21,21 @@ git clone https://github.com/fengkiej/IDRTCash.git
 cd IDRTCash
 ```
 
-2. Navigate to `smart-contracts` folder and install dependecies.
+2. Navigate to `smart-contracts` folder and install dependecies, and add .env variables.
 ```
 cd smart-contracts
 npm install
 ```
+`.env:`
+```
+BASE_URI=localhost:8000/static/metadata
+DENOMS=[1000,2000,5000,10000,20000,50000,100000]
+LIGHTHOUSE_ADDRESS=0x613D2159db9ca2fBB15670286900aD6c1C79cC9a
+```
 
 3. Run local Ganache instance.
 ```
-npx ganache-cli --deterministic
+npx ganache-cli -d
 ```
 
 4. Run Truffle migrate
@@ -41,6 +47,8 @@ npx truffle migrate --network development
 ```
 cd ../dapp
 npm install
+node node_modules/node-sass/scripts/install.js
+npm rebuild node-sass
 ```
 
 6. Serve dapp by running:
