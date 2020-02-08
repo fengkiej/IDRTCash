@@ -25,15 +25,15 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[],\"name\":\"poke\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"identify\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/fengkiej/Documents/ConsensysAcademy/IDRT-Cash/IDRTCash/smart-contracts/contracts/local_test_contracts/Lighthouse.sol\":\"Searcher\"},\"evmVersion\":\"constantinople\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/fengkiej/Documents/ConsensysAcademy/IDRT-Cash/IDRTCash/smart-contracts/contracts/local_test_contracts/Lighthouse.sol\":{\"keccak256\":\"0x414d5250b352fb8cb28f5a13cfc510bd29486e6baefb8f546323c907f8d95aaa\",\"urls\":[\"bzzr://ea0d0f9bdaa9b1119d6f149c2de65e5dab25ae91a2dd4228699e30a9821965e7\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[],\"name\":\"poke\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"identify\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/fengkiej/Documents/ConsensysAcademy/IDRTCash/smart-contracts/contracts/local_test_contracts/Lighthouse.sol\":\"Searcher\"},\"evmVersion\":\"constantinople\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/fengkiej/Documents/ConsensysAcademy/IDRTCash/smart-contracts/contracts/local_test_contracts/Lighthouse.sol\":{\"keccak256\":\"0x414d5250b352fb8cb28f5a13cfc510bd29486e6baefb8f546323c907f8d95aaa\",\"urls\":[\"bzzr://ea0d0f9bdaa9b1119d6f149c2de65e5dab25ae91a2dd4228699e30a9821965e7\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "/* For development/local testing only */\n\npragma solidity ^0.5.0;\n\n// Searcher is an interface for contracts that want to be notified of incoming data\ncontract Searcher {\n\n    // poke is called when new data arrives\n    function poke() public;\n\n    // this is called to ensure that only valid Searchers can be added to the Lighthouse - returns an arbitrarily chosen number\n    function identify() external pure returns(uint) {\n        return 0xda4b055;\n    }\n}\n\n// for operation of this contract see the readme file.\ncontract Lighthouse {\n\n    address public auth = msg.sender; // ownable model. No real value in making it transferrable.\n\n    Searcher seeker;                  // a single contract that can be notified of data changes\n\n    uint value;                       // holds all the data bit fiddled into a single 32 byte word.\n\n    uint maxAge;                      // if non zero, sets a limit to data validity\n\n/*--------------------------------- Admin Functions -----------------------------------------------*/\n\n    // Only allows an authorized address to call certain functions\n    modifier onlyAuth {\n        require(auth == msg.sender, \"Unauthorised access\");\n        _;\n    }\n\n    function changeAuth(address newAuth) public onlyAuth {\n        auth = newAuth;\n    }\n\n    function changeSearcher(Searcher newSeeker) public onlyAuth {\n        seeker = newSeeker;\n        require(seeker.identify() == 0xda4b055,\"invalid searcher\");\n    }\n\n    function setMaxAge(uint newMaxAge) public onlyAuth {\n        maxAge = newMaxAge;\n    }\n\n    // Writes a value into the lighthouse. Usually done by a rhombus oracle\n    function write(uint  DataValue, uint nonce) external onlyAuth {\n        require ((DataValue >> 128) == 0, \"Value too large\");\n        require ((nonce >> 32) == 0, \"Nonce too large\");\n        value = DataValue + (nonce << 192) + (now << 128) ;\n        if (address(seeker) != address(0)) {\n            seeker.poke();\n        }\n    }\n\n/*--------------------------------- Public Functions -----------------------------------------------*/\n\n    // Checks if data is within age limit\n    function notTooLongSinceUpdated() public view returns (bool) {\n        uint since = now - ((value >> 128) &\n        0x000000000000000000000000000000000000000000000000ffffffffffffffff);\n        return (since < maxAge) || (maxAge == 0);\n    }\n\n    // Obtains the data stored inside the lighthouse\n    function peekData() external view returns (uint128 v,bool b) {\n        v = uint128(value);\n        b = notTooLongSinceUpdated() && value != 0;\n        return (v, b);\n    }\n\n    function peekUpdated()  external view returns (uint32 v,bool b) {\n        uint v2 = value >> 128;\n        v = uint32(v2);\n        b = notTooLongSinceUpdated() && value != 0;\n        return (v, b);\n    }\n\n    function peekLastNonce() external view returns (uint32 v,bool b) {\n        uint v2 = value >> 192;\n        v = uint32(v2);\n        b = notTooLongSinceUpdated() && value != 0;\n        return (v, b);\n    }\n\n    function peek() external view returns (bytes32 v ,bool ok) {\n        v = bytes32(value & 0x00000000000000000000000000000000ffffffffffffffffffffffffffffffff);\n        ok = notTooLongSinceUpdated() && value != 0;\n        return (v, ok);\n    }\n\n    function read() external view returns (bytes32 x) {\n        require(notTooLongSinceUpdated() && value != 0, \"Invalid data stored\");\n        return bytes32(value & 0x00000000000000000000000000000000ffffffffffffffffffffffffffffffff);\n    }\n}",
-  "sourcePath": "/home/fengkiej/Documents/ConsensysAcademy/IDRT-Cash/IDRTCash/smart-contracts/contracts/local_test_contracts/Lighthouse.sol",
+  "sourcePath": "/home/fengkiej/Documents/ConsensysAcademy/IDRTCash/smart-contracts/contracts/local_test_contracts/Lighthouse.sol",
   "ast": {
-    "absolutePath": "/home/fengkiej/Documents/ConsensysAcademy/IDRT-Cash/IDRTCash/smart-contracts/contracts/local_test_contracts/Lighthouse.sol",
+    "absolutePath": "/home/fengkiej/Documents/ConsensysAcademy/IDRTCash/smart-contracts/contracts/local_test_contracts/Lighthouse.sol",
     "exportedSymbols": {
       "Lighthouse": [
         1519
@@ -4212,7 +4212,7 @@
     "src": "42:3443:5"
   },
   "legacyAST": {
-    "absolutePath": "/home/fengkiej/Documents/ConsensysAcademy/IDRT-Cash/IDRTCash/smart-contracts/contracts/local_test_contracts/Lighthouse.sol",
+    "absolutePath": "/home/fengkiej/Documents/ConsensysAcademy/IDRTCash/smart-contracts/contracts/local_test_contracts/Lighthouse.sol",
     "exportedSymbols": {
       "Lighthouse": [
         1519
@@ -8395,8 +8395,8 @@
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.0.21",
-  "updatedAt": "2020-02-02T15:49:11.637Z",
+  "schemaVersion": "3.0.20",
+  "updatedAt": "2020-02-08T19:57:36.982Z",
   "devdoc": {
     "methods": {}
   },

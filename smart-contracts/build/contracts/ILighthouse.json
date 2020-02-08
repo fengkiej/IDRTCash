@@ -88,15 +88,15 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"peekData\",\"outputs\":[{\"name\":\"v\",\"type\":\"uint128\"},{\"name\":\"b\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"read\",\"outputs\":[{\"name\":\"x\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"peek\",\"outputs\":[{\"name\":\"v\",\"type\":\"bytes32\"},{\"name\":\"ok\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"peekUpdated\",\"outputs\":[{\"name\":\"v\",\"type\":\"uint32\"},{\"name\":\"b\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"peekLastNonce\",\"outputs\":[{\"name\":\"v\",\"type\":\"uint32\"},{\"name\":\"b\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/fengkiej/Documents/ConsensysAcademy/IDRT-Cash/IDRTCash/smart-contracts/contracts/Ilighthouse.sol\":\"ILighthouse\"},\"evmVersion\":\"constantinople\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/fengkiej/Documents/ConsensysAcademy/IDRT-Cash/IDRTCash/smart-contracts/contracts/Ilighthouse.sol\":{\"keccak256\":\"0xbe9cb1b1cda81741ca1bb14d6957c77ee39c2e61979d0fb0ad9e66f5ff17f657\",\"urls\":[\"bzzr://680882bf951efe51cf94081536251518426e8a6013eab97958175c6b381b72a4\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"peekData\",\"outputs\":[{\"name\":\"v\",\"type\":\"uint128\"},{\"name\":\"b\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"read\",\"outputs\":[{\"name\":\"x\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"peek\",\"outputs\":[{\"name\":\"v\",\"type\":\"bytes32\"},{\"name\":\"ok\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"peekUpdated\",\"outputs\":[{\"name\":\"v\",\"type\":\"uint32\"},{\"name\":\"b\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"peekLastNonce\",\"outputs\":[{\"name\":\"v\",\"type\":\"uint32\"},{\"name\":\"b\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/fengkiej/Documents/ConsensysAcademy/IDRTCash/smart-contracts/contracts/Ilighthouse.sol\":\"ILighthouse\"},\"evmVersion\":\"constantinople\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/fengkiej/Documents/ConsensysAcademy/IDRTCash/smart-contracts/contracts/Ilighthouse.sol\":{\"keccak256\":\"0xbe9cb1b1cda81741ca1bb14d6957c77ee39c2e61979d0fb0ad9e66f5ff17f657\",\"urls\":[\"bzzr://680882bf951efe51cf94081536251518426e8a6013eab97958175c6b381b72a4\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity 0.5.8;\n\ninterface ILighthouse {\n\n    function peekData() external view returns (uint128 v,bool b);\n\n    function peekUpdated()  external view returns (uint32 v,bool b);\n\n    function peekLastNonce() external view returns (uint32 v,bool b);\n\n    function peek() external view returns (bytes32 v ,bool ok);\n\n    function read() external view returns (bytes32 x);\n}",
-  "sourcePath": "/home/fengkiej/Documents/ConsensysAcademy/IDRT-Cash/IDRTCash/smart-contracts/contracts/Ilighthouse.sol",
+  "sourcePath": "/home/fengkiej/Documents/ConsensysAcademy/IDRTCash/smart-contracts/contracts/Ilighthouse.sol",
   "ast": {
-    "absolutePath": "/home/fengkiej/Documents/ConsensysAcademy/IDRT-Cash/IDRTCash/smart-contracts/contracts/Ilighthouse.sol",
+    "absolutePath": "/home/fengkiej/Documents/ConsensysAcademy/IDRTCash/smart-contracts/contracts/Ilighthouse.sol",
     "exportedSymbols": {
       "ILighthouse": [
         673
@@ -510,7 +510,7 @@
     "src": "0:378:2"
   },
   "legacyAST": {
-    "absolutePath": "/home/fengkiej/Documents/ConsensysAcademy/IDRT-Cash/IDRTCash/smart-contracts/contracts/Ilighthouse.sol",
+    "absolutePath": "/home/fengkiej/Documents/ConsensysAcademy/IDRTCash/smart-contracts/contracts/Ilighthouse.sol",
     "exportedSymbols": {
       "ILighthouse": [
         673
@@ -928,8 +928,8 @@
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.0.21",
-  "updatedAt": "2020-02-02T15:49:11.602Z",
+  "schemaVersion": "3.0.20",
+  "updatedAt": "2020-02-08T19:57:36.945Z",
   "devdoc": {
     "methods": {}
   },
