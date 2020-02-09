@@ -53,10 +53,9 @@ function generateJSON(tokenId) {
     "name": `IDRTCash #${ sn }`,
     "description": `IDRTCash #${ sn }`,
     "image": `${process.env.BASE_URI}/static/images/${ tokenId }.svg`,
-    "image_data": `${process.env.BASE_URI}/static/images/${ tokenId }.svg`,
     "attributes": [
       {
-        "display_type": "serial number", 
+        "trait_type": "serial number", 
         "value": `${ sn }`
       }
     ]
