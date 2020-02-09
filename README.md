@@ -15,6 +15,9 @@ IDRTCash is intended to mimic the rupiah denominations as ERC721 cryptocollectib
 Demo (Rinkeby): http://139.162.168.113:8000/
 ![IDRTCash](https://user-images.githubusercontent.com/14020439/73609794-b85a6700-4603-11ea-9509-1371a8e86500.gif)
 
+IDRTCash on Rinkeby OpenSea: https://rinkeby.opensea.io/assets/idrtcash
+![opensea-idrtcash](https://user-images.githubusercontent.com/14020439/74095698-005b1b80-4b27-11ea-8fc1-f3a582f0d04e.png)
+
 ## Running on Local ##
 1. Clone the repository
 ```
