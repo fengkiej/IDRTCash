@@ -12,6 +12,7 @@ IDRTCash is intended to mimic the rupiah denominations as ERC721 cryptocollectib
 * Collect IDRTCash with unique serial number/token ID
 
 ## Preview ##
+Rinkeby: http://139.162.168.113:8000/
 ![IDRTCash](https://user-images.githubusercontent.com/14020439/73609794-b85a6700-4603-11ea-9509-1371a8e86500.gif)
 
 ## Running on Local ##
@@ -65,7 +66,7 @@ OR
 First account private key: 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
 ```
 
-8. Go to `localhost:8000` to start interacting with IDRTCash.
+8. Go to `localhost:8000` to start interacting with IDRTCash or `139.162.168.113:8000` for Rinkeby version.
 
 ## Possible Improvements ##
 - Host the metadata and image at IPFS.
