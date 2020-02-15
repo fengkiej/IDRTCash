@@ -4,12 +4,6 @@ import Lighthouse from './../../smart-contracts/build/contracts/Lighthouse.json'
 
 
 const options = {
-  web3: {
-    fallback: {
-      type: 'ws',
-      url: 'ws://localhost:8545'
-    }
-  },
   contracts: [
     ERC20IDRTSample, IDRTCashV1, Lighthouse
   ],
