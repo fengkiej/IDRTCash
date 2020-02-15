@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const Web3 = require('web3-eth');
 const Web3Utils = require('web3-utils');
-const web3 = new Web3(`${process.env.INFURA_PROVIDER}`||'ws://localhost:8545');
+const web3 = new Web3('ws://localhost:8545');
 const fs = require('fs-extra');
 const cheerio = require('cheerio');
 const path = require('path');
